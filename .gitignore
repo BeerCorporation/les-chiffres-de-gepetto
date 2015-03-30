@@ -1,0 +1,10 @@
+# VS files
+bin
+obj
+packages
+*.suo
+
+# DB files
+*.mdf
+*.ldf
+les-chiffres-de-gepetto/Config.fs
