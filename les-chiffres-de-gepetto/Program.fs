@@ -45,6 +45,17 @@ module Main =
         Console.ReadKey() |> ignore
         0
 
+    let rec combinations acc size set = seq {
+        match size, set with 
+        | n, x::xs -> 
+            if n > 0 then yield! combinations (x::acc) (n - 1) xs
+            if n >= 0 then yield! combinations acc n xs 
+        | 0, [] -> yield acc 
+        | _, [] -> () 
+    }
+
+    let combinations2 = combinations [] 2
+
     // Returns all synonyms for a given word, using the exisiting database and Wiktionary
     let findSynonyms word =
         printfn ""
