@@ -54,7 +54,7 @@ module Main =
         | _, [] -> () 
     }
 
-    let combinations2 = combinations [] 2
+    let combinations2 set = combinations [] 2 set
 
     // Returns all synonyms for a given word, using the exisiting database and Wiktionary
     let findSynonyms word =
@@ -148,10 +148,16 @@ module Main =
                         |> Seq.sort
                     else
                         let wordId = (Seq.last wordsInDb).Id + 1
-                        newWords |> Seq.map (fun item -> new dbSchema.ServiceTypes.Words(Id = wordId + (newWords |> Seq.findIndex ((=) item)), Word = item))
-                                 |> db.Words.InsertAllOnSubmit
-                        newWords |> Seq.map (fun item -> new dbSchema.ServiceTypes.Relations(Word1 = wordInDb.Id, Word2 = wordId + (newWords |> Seq.findIndex ((=) item))))
-                                 |> db.Relations.InsertAllOnSubmit
+                        let wordMap = newWords
+                                      |> Seq.map (fun item -> (wordId + (newWords |> Seq.findIndex ((=) item)), item))
+                                      |> Map.ofSeq
+                        wordMap |> Seq.map (fun item -> new dbSchema.ServiceTypes.Words(Id = item.Key, Word = item.Value))
+                                |> db.Words.InsertAllOnSubmit
+                        wordMap |> Map.add wordInDb.Id wordInDb.Word
+                                |> Map.toList
+                                |> combinations2
+                                |> Seq.map (fun item -> new dbSchema.ServiceTypes.Relations(Word1 = (item.[1] |> fst), Word2 = (item.[0] |> fst)))
+                                |> db.Relations.InsertAllOnSubmit
 
                         db.DataContext.SubmitChanges()
 
