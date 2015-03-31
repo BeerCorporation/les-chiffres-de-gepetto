@@ -29,9 +29,30 @@ module Synonym =
         else
             None
 
+    let (|Suffix|_|) (p:string) (s:string) =
+        if s.EndsWith(p) then
+            Some (s.Substring(0, (s.Length - p.Length)))
+        else
+            None
+    
+    let normalizeWord word =
+        let prefixed = 
+            match word with
+            | Prefix "se " text -> text
+            | Prefix "s’"  text -> text
+            | Prefix "s'"  text -> text
+            | text -> text
+        match prefixed with
+        | Suffix "s"    text -> text
+        | Suffix "eaux" text -> text + "eau"
+        | Suffix "aux"  text -> text + "al"
+        | Suffix "oux"  text -> text + "ou"
+        | text               -> text
+
     // Returns all synonyms for a given word, using the exisiting database and Wiktionary
-    let findSynonyms word =
+    let findSynonyms wordToCheck =
         printfn ""
+        let word = normalizeWord wordToCheck
         // First, let's gather all words from the database
         let previousWordsInDb = query {
             for row in db.Words do
@@ -109,16 +130,11 @@ module Synonym =
                 match synStart with
                 | Some synStart ->
                     let rawSkipped = raw |> Seq.skip (synStart + 1)
-                    let synEnd = rawSkipped |> Seq.findIndex (fun elem -> elem.Equals "") 
+                    let synEnd = rawSkipped |> Seq.findIndex (fun elem -> elem.Equals "" || elem.Equals " ") 
                     let newWords = rawSkipped |> Seq.take synEnd
                                               |> Seq.distinct
                                               |> Seq.filter (fun item -> item.[2] = '[')
-                                              |> Seq.map (fun item -> Regex.Match(item, "(?<=\[\[)(.*?)(?=\])").Value.ToLower())
-                                              |> Seq.map (fun item -> match item with
-                                                                      | Prefix "se " text -> text
-                                                                      | Prefix "s’" text -> text
-                                                                      | Prefix "s'" text -> text
-                                                                      | text -> text)
+                                              |> Seq.map (fun item -> Regex.Match(item, "(?<=\[\[)(.*?)(?=\])").Value.ToLower() |> normalizeWord)
                                               |> Seq.filter (fun item -> (item.Split ' ' |> Array.length = 1))
                                               |> Seq.filter (fun item -> not (wordsInDb |> Seq.exists (fun elem -> elem.Word = item)))
                     if Seq.isEmpty newWords then
