@@ -38,7 +38,7 @@ module Main =
         while true do
             printfn "Mot ?"
             System.Console.ReadLine() 
-            |> Synonym.findSynonyms 
-            |> Seq.iter (fun item -> printfn "%s" item)
+            |> Conjugation.getInfinitive
+            |> printfn "%s"
             printfn ""
         0

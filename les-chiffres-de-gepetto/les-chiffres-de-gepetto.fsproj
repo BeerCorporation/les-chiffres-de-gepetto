@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.fs" />
+    <Compile Include="Conjugation.fs" />
     <Compile Include="Synonym.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
