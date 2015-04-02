@@ -17,28 +17,33 @@ module Main =
     ]
 
     let filterQuestion (question: string) =
-        question.Split(' ')
+        question.Split ' '
         |> Array.filter (fun word -> word.Length > 2 || word.Length > 1 && word.ToUpper().Equals word)
         |> Array.filter (fun word -> not (List.exists (fun item -> word.ToLower().Equals item) trashWords))
+        |> Array.toList
 
-    let main _ = 
-        [
-            "Combien y a t'il de gens qui votent FN aux départementales en Ile de France ?"
-            "Quel est le pourcentage de gens qui regrettent de ne pas s'être foutu des caisses au collège ?"
-            "Quel est le nombre de gens riches qui mangent de la merde pour se sentir prolétaire ?"
-            "Quelle est proportion de gens qui sont plus stressés parce qu'ils utilisent Linux ?"
-        ]
-        |> List.map filterQuestion
-        |> List.iter (printfn "%A") 
-        System.Console.ReadKey() |> ignore
-        0
+    let getScore ids =
+        ids |> List.map (fun item -> 75 + item % 11)
+            |> List.averageBy (fun item -> float item)
+            |> int
+    
+    open FSharp.Data
+    open System.Xml.Linq
+    type Word = XmlProvider<"http://dictionnaire.cordial-enligne.fr/DictionnaireXml/manger.xml">
 
     [<EntryPoint>]
-    let testHttp _ =
+    let main _ = 
+        let resp = Http.RequestString("http://dictionnaire.cordial-enligne.fr/php/search.php", body = FormValues ["mot", "mangent"])
+        let xml = Http.RequestString("http://dictionnaire.cordial-enligne.fr/DictionnaireXml/" + resp)
+                  |> Word.Parse
+        printfn "%s" xml.Definition.Titre.Entree
         while true do
-            printfn "Mot ?"
-            System.Console.ReadLine() 
-            |> Conjugation.getInfinitive
-            |> printfn "%s"
-            printfn ""
+            System.Console.ReadLine ()
+            |> filterQuestion
+            |> List.map (fun item -> item |> Conjugation.getInfinitive
+                                          |> Synonym.findSynonyms
+                                          |> Seq.min
+                                          |> fst)
+            |> getScore
+            |> printfn "%d%%\n"
         0
