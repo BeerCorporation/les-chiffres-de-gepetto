@@ -26,22 +26,14 @@ module Main =
         ids |> List.map (fun item -> 75 + item % 11)
             |> List.averageBy (fun item -> float item)
             |> int
-    
-    open FSharp.Data
-    open System.Xml.Linq
-    type Word = XmlProvider<"http://dictionnaire.cordial-enligne.fr/DictionnaireXml/manger.xml">
 
     [<EntryPoint>]
     let main _ = 
-        let resp = Http.RequestString("http://dictionnaire.cordial-enligne.fr/php/search.php", body = FormValues ["mot", "mangent"])
-        let xml = Http.RequestString("http://dictionnaire.cordial-enligne.fr/DictionnaireXml/" + resp)
-                  |> Word.Parse
-        printfn "%s" xml.Definition.Titre.Entree
         while true do
+            printfn "Posez votre question !"
             System.Console.ReadLine ()
             |> filterQuestion
-            |> List.map (fun item -> item |> Conjugation.getInfinitive
-                                          |> Synonym.findSynonyms
+            |> List.map (fun item -> item |> Synonym.findSynonyms
                                           |> Seq.min
                                           |> fst)
             |> getScore
