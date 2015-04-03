@@ -23,7 +23,8 @@ module Main =
         |> Array.toList
 
     let getScore ids =
-        ids |> List.map (fun item -> 75 + item % 11)
+        ids |> Seq.toList
+            |> List.map (fun item -> 75 + item % 11)
             |> List.averageBy (fun item -> float item)
             |> int
 
@@ -33,9 +34,15 @@ module Main =
             printfn "Posez votre question !"
             System.Console.ReadLine ()
             |> filterQuestion
-            |> List.map (fun item -> item |> Synonym.findSynonyms
-                                          |> Seq.min
-                                          |> fst)
+            |> Seq.distinct
+            |> Seq.map (fun item -> item |> Synonym.FindWord)
+            |> Async.Parallel
+            |> Async.RunSynchronously
+            |> Seq.distinct
+            |> Seq.map (fun item -> item |> Synonym.FindSynonyms)             
+            |> Async.Parallel
+            |> Async.RunSynchronously
+            |> Seq.map (fun item -> item |> Seq.min |> fst)
             |> getScore
             |> printfn "%d%%\n"
         0
