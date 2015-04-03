@@ -30,14 +30,22 @@ module Synonym =
         member this.RemoveExt =
             this.Remove (this.Length - 4, 4)
 
+    // Active pattern to replace "adjectif" by "-adjectif" at the end of a string
+    let (|Adjective|_|) (word: string) =
+        if (word.EndsWith("adjectif") && word.Length > 8) then
+            Some <| word.Substring (0, word.Length - 8) + "-adjectif"
+        else
+            None
+
     // Query the Cordial dictionary to find the nominal form of the given word
     // Output is a string * bool, second equals true if the word exists in the dictionary
     let findWord word =
         match Http.RequestString("http://dictionnaire.cordial-enligne.fr/php/search.php", body = FormValues ["mot", word]) with
         | "0" -> (word, false) // Doesn't exists, so we return the original word
-        | wd  -> printfn "%s" wd
-                 (wd.RemoveExt, true) // Response word has a ".xml" suffix
-
+        | wd  -> match wd.RemoveExt with // Response word has a ".xml" suffix
+                | Adjective wda -> (wda, true) // Adjective can have a "adjectif" suffix that isn't properly written
+                | wda -> (wda, true)
+               
     // Returns all synonyms for a given word, using the exisiting database and the online Cordial dictionary
     let findSynonyms wordToCheck =
         // Normalizes the word to find its singular/infinitive form
