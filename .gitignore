@@ -8,3 +8,4 @@ packages
 *.mdf
 *.ldf
 les-chiffres-de-gepetto/Config.fs
+word-parser/Morphalou.xml

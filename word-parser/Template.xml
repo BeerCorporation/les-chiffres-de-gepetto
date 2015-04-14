@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<lexicon>
+	<lexicalEntry id="a_1">
+		<formSet>
+			<lemmatizedForm>
+				<orthography>a</orthography>
+				<grammaticalCategory>commonNoun</grammaticalCategory>
+				<grammaticalGender>masculine</grammaticalGender>
+			</lemmatizedForm>
+			<inflectedForm>
+				<orthography>abaissant</orthography>
+				<grammaticalNumber>singular</grammaticalNumber>
+				<grammaticalGender>masculine</grammaticalGender>
+			</inflectedForm>
+		</formSet>
+		<originatingEntry target="TLF">A, subst. masc.</originatingEntry>
+	</lexicalEntry>
+	<lexicalEntry id="a_b_c_1">
+		<formSet>
+			<lemmatizedForm>
+				<orthography>a b c</orthography>
+				<grammaticalCategory>verb</grammaticalCategory>
+			</lemmatizedForm>
+			<inflectedForm>
+				<orthography>abaissais</orthography>
+				<grammaticalNumber>singular</grammaticalNumber>
+				<grammaticalMood>indicative</grammaticalMood>
+				<grammaticalTense>imperfect</grammaticalTense>
+				<grammaticalPerson>firstPerson</grammaticalPerson>
+			</inflectedForm>
+			<inflectedForm>
+				<orthography>abaissais</orthography>
+				<grammaticalNumber>singular</grammaticalNumber>
+				<grammaticalMood>indicative</grammaticalMood>
+				<grammaticalTense>imperfect</grammaticalTense>
+				<grammaticalPerson>firstPerson</grammaticalPerson>
+			</inflectedForm>
+			<inflectedForm>
+				<orthography>abaissais</orthography>
+				<grammaticalNumber>singular</grammaticalNumber>
+				<grammaticalMood>indicative</grammaticalMood>
+				<grammaticalTense>imperfect</grammaticalTense>
+				<grammaticalPerson>firstPerson</grammaticalPerson>
+			</inflectedForm>
+		</formSet>
+		<originatingEntry target="TLF">A B C, ABÉCÉ, ABÉCÉDÉ, subst. masc. / ABÉCÉ, voir A B C.</originatingEntry>
+	</lexicalEntry>
+</lexicon>
