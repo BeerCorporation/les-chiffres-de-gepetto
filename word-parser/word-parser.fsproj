@@ -57,6 +57,7 @@
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
+    <None Include="template.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
