@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "les-chiffres-de-gepetto", "les-chiffres-de-gepetto\les-chiffres-de-gepetto.fsproj", "{7CF2863C-DD10-4AF5-9B0D-DA55F00281BD}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "word-parser", "word-parser\word-parser.fsproj", "{5A9553E2-5E3C-482D-B562-6422038AAAD5}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "database", "database\database.fsproj", "{F781C635-10CC-4002-8C57-77C71E6A359E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{7CF2863C-DD10-4AF5-9B0D-DA55F00281BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF2863C-DD10-4AF5-9B0D-DA55F00281BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF2863C-DD10-4AF5-9B0D-DA55F00281BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A9553E2-5E3C-482D-B562-6422038AAAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A9553E2-5E3C-482D-B562-6422038AAAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A9553E2-5E3C-482D-B562-6422038AAAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A9553E2-5E3C-482D-B562-6422038AAAD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F781C635-10CC-4002-8C57-77C71E6A359E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F781C635-10CC-4002-8C57-77C71E6A359E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F781C635-10CC-4002-8C57-77C71E6A359E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F781C635-10CC-4002-8C57-77C71E6A359E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
